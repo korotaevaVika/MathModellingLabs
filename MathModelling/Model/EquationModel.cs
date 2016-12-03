@@ -78,7 +78,7 @@ namespace MathModelling.Model
                 collection.Add(t.ElementAt(i), points);
                 for (int j = 0; j < x.Count; j++)
                 {
-                    collection[t.ElementAt(i)].Add( new Point(x.ToArray()[j],0)) ;
+                    collection[t.ElementAt(i)].Add(new Point(x.ToArray()[j], 0));
                 }
             }
 
@@ -91,7 +91,7 @@ namespace MathModelling.Model
                 SetY(0, i, y_0t(GetX(0, i)));
             }
 
-            for (int i = 1; i < t.Count-1; i++)
+            for (int i = 1; i < t.Count - 1; i++)
             {
                 for (int j = 1; j < x.Count; j++)
                 {
@@ -102,12 +102,19 @@ namespace MathModelling.Model
                             (
                             f(GetX(j, i), GetT(i))
                             - GetC(j, i + 1) * (GetY(j, i) - GetY(j - 1, i)) / x_step(j - 1)
+                            )
                             + GetY(j, i)
-                            );
+                            ;
                     }
                     else
                     {
-                        //Схема 10
+                        collection[t.ElementAt(i + 1)].ElementAt(j).Y =
+                            (
+                            f(GetX(j, i), GetT(i))
+                            + ((GetY(j, i) - GetY(j - 1, i + 1)) / t_step(j))
+                            * x_step(j - 1) / GetC(j, i + 1)
+                            )
+                            + GetY(j - 1, i + 1);
                     }
                 }
             }
@@ -119,10 +126,25 @@ namespace MathModelling.Model
             List<double> lst = new List<double>();
             foreach (var item in collection[t_value])
             {
+                //System.Diagnostics.Debug.WriteLine("t = {0}, round = {1}", t_value, Math.Round(t_value, 1));
                 lst.Add(item.Y);
             }
             return lst;
         }
+
+        c_del y = new c_del((x, t) => Math.Exp(Math.Sin(t) * x));
+        public List<double> GetOriginValues(double tValue)
+        {
+            List<double> ys = new List<double>();
+            foreach (var item in collection[tValue])
+            {
+                ys.Add(y(item.X, tValue));
+            }
+            return ys;
+        }
+
+        
+
     }
 }
 

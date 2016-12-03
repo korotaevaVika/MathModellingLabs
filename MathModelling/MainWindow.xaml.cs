@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms.DataVisualization.Charting;
 using MathModelling.Model;
+using System.Diagnostics;
+using System.Drawing;
 
 namespace MathModelling
 {
@@ -22,11 +24,10 @@ namespace MathModelling
             lst_t = new List<double>();
             for (int i = 0; i < 30; i++)
             {
-                lst_t.Add(0.05 * i);
+                lst_t.Add(0.2 * i);
             }
             InitializeComponent();
             slider.Minimum = 0;
-
             slider.Maximum = lst_t.ToArray()[lst_t.Count - 1];
         }
 
@@ -37,16 +38,12 @@ namespace MathModelling
 
             for (int i = 0; i < 10; i++)
             {
-                lst_x.Add(0.2 * i);
+                lst_x.Add(i);
             }
-            //for (int i = 0; i < 30; i++)
-            //{
-            //    lst_t.Add(0.5 * i);
-            //}
             c_del c_func = new c_del((x, t) => 2 * x * t);
-            c_del f_func = new c_del((x, t) => (-2 * x * Math.Sin(t) + c_func(x, t) * 2 * Math.Cos(t)) * Math.Exp(2 * x * Math.Cos(t)) + Math.Pow(t, 3));
-            y_0_del yX0 = new y_0_del((x) => Math.Exp(2 * x));
-            y_0_del y0T = new y_0_del((t) => 1);
+            c_del f_func = new c_del((x, t) => (Math.Cos(t) * x * Math.Sin(t) + c_func(x, t) * Math.Exp(Math.Sin(t))));
+            y_0_del yX0 = new y_0_del((x) => 1);
+            y_0_del y0T = new y_0_del((t) => 0);
 
             diffur = new DifferentialEquation(lst_x, lst_t, c_func, f_func, yX0, y0T);
 
@@ -55,17 +52,34 @@ namespace MathModelling
             // Добавим линию, и назначим ее в ранее созданную область "Default"
             chart.Series.Add(new Series(ChartSerieName));
             chart.Series[ChartSerieName].ChartArea = ChartAreaName;
-            chart.Series[ChartSerieName].ChartType = SeriesChartType.Line;
+            chart.Series[ChartSerieName].ChartType = SeriesChartType.Point;
+            chart.Series[ChartSerieName].Color = Color.Blue;
+
+
+            chart.Series.Add(new Series("Original"));
+            chart.Series["Original"].ChartArea = ChartAreaName;
+            chart.Series["Original"].ChartType = SeriesChartType.Line;
+            chart.Series["Original"].Color = Color.OrangeRed;
+
 
             // добавим данные линии
             chart.Series[ChartSerieName].Points.DataBindXY(lst_x, diffur.GetListY(0));
+            chart.Series["Original"].Points.DataBindXY(lst_x, diffur.GetOriginValues(0));
+
         }
 
         private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            
+            slider.Value = Math.Round(slider.Value, 1);
             chart.Series[ChartSerieName].Points.Clear();
-            chart.Series[ChartSerieName].Points.DataBindXY(lst_x, diffur.GetListY(slider.Value));
+            try
+            {
+                chart.Series[ChartSerieName].Points.DataBindXY(lst_x, diffur.GetListY(slider.Value));
+                chart.Series["Original"].Points.DataBindXY(lst_x, diffur.GetListY(slider.Value));
+            }
+            catch(Exception) { Debug.WriteLine(slider.Value); }
+
+            txtBlock.Text = slider.Value.ToString();
         }
 
         private void btnChangeTime_Click(object sender, RoutedEventArgs e)

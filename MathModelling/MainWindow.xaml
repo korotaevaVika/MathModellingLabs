@@ -9,15 +9,17 @@
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:dvc="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
         mc:Ignorable="d"
-        Title="Явно-Неявная схема" Height="350" Width="525"
+        Title="Явно-Неявная схема" Height="348.542" Width="525"
         Loaded="Window_Loaded">
 
     <Grid Margin="0,0,125,138">
         <WindowsFormsHost Margin="10,10,-10,-10">
             <dvc:Chart x:Name="chart" />
         </WindowsFormsHost>
-        <Slider x:Name="slider" HorizontalAlignment="Left" Height="61" Margin="10,197,-10,-77" VerticalAlignment="Top" Width="392" SmallChange="0.5" Maximum="9" TickPlacement="Both" ValueChanged="slider_ValueChanged"/>
-        <TextBox x:Name="txtTime" HorizontalAlignment="Left" Height="28" Margin="10,263,0,-110" TextWrapping="Wrap" VerticalAlignment="Top" Width="51"/>
-        <Button x:Name="btnChangeTime" Content="Поменять время" HorizontalAlignment="Left" Height="28" Margin="101,263,0,-110" VerticalAlignment="Top" Width="160" Click="btnChangeTime_Click"/>
+        <Slider x:Name="slider" HorizontalAlignment="Left" Height="61" Margin="10,197,-10,-77" VerticalAlignment="Top" Width="392" Maximum="6" TickPlacement="Both" ValueChanged="slider_ValueChanged" SmallChange="0" AutoToolTipPlacement="TopLeft"/>
+        <TextBox x:Name="txtTime" HorizontalAlignment="Left" Height="28" Margin="10,258,0,-106" TextWrapping="Wrap" VerticalAlignment="Top" Width="51"/>
+        <Button x:Name="btnChangeTime" Content="Поменять время" HorizontalAlignment="Left" Height="28" Margin="101,258,0,-106" VerticalAlignment="Top" Width="160" Click="btnChangeTime_Click"/>
+        <TextBlock x:Name="txtBlock" HorizontalAlignment="Left" Margin="427,162,-114,-10" TextWrapping="Wrap" 
+                 Text=""  VerticalAlignment="Top" Width="79" Height="29"/>
     </Grid>
 </Window>
