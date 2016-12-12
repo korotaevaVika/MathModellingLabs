@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MathModelling.Model
+﻿namespace MathModelling.Model
 {
     /// <summary>
     /// Свой класс для Point'a. Для реализации возможности изменения X, Y в отличие от System.Windows.Point

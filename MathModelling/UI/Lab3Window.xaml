@@ -1,0 +1,57 @@
+﻿<Controls:MetroWindow x:Class="MathModelling.UI.Lab3Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:collection="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MathModelling.UI"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:dvc="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
+        mc:Ignorable="d"
+        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        Title="Лабораторная работа 3. Аппроксимация" Height="348.542" Width="525"
+        BorderBrush="Blue"
+        ResizeMode="CanMinimize"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <BitmapImage x:Key="ExpInPow" UriSource="pack://application:,,,/Resources/exp.gif"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="70"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <WindowsFormsHost x:Name="form" Margin="0, 16, 0, 0" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" HorizontalAlignment="Center">
+            <dvc:Chart x:Name="chart" />
+        </WindowsFormsHost>
+        <Slider x:Name="slider" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3" 
+                VerticalAlignment="Center" Width="392" Maximum="6" TickPlacement="Both" 
+                ValueChanged="slider_ValueChanged" SmallChange="0" AutoToolTipPlacement="TopLeft"/>
+        <TextBox x:Name="txtTime" HorizontalAlignment="Left" 
+                 Grid.Column="1" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" Margin="161,2,0,0"/>
+        <Button x:Name="btnChangeTime" Content="Поменять старшую степень" Grid.Column="1" Grid.Row="4"
+                HorizontalAlignment="Right" Height="28" VerticalAlignment="Top" Click="btnChangeTime_Click"/>
+        <TextBlock HorizontalAlignment="Center" Grid.Column="1" Grid.Row="4" TextWrapping="Wrap" 
+        Text="POW = "  VerticalAlignment="Center" Margin="19,2,333,36" Width="47" RenderTransformOrigin="0.721,-0.315" Height="26"/>
+        <TextBlock x:Name="txtBlock" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="4" TextWrapping="Wrap" 
+                 Text=""  VerticalAlignment="Center" Margin="71,2,280,36" Width="48" Height="26"/>
+        <ComboBox x:Name="comboBox" Grid.Column="1" 
+                  HorizontalAlignment="Right" VerticalAlignment="Top" 
+                  Width="168" Grid.Row="4" Margin="0,33,0,0" SelectionChanged="comboBox_SelectionChanged" Visibility="Hidden"/>
+        <Image x:Name="image" Grid.Column="2" Source="{StaticResource ExpInPow}"
+               HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" 
+               Width="70" Margin="0,10,0,0" Grid.Row="1"/>
+    </Grid>
+</Controls:MetroWindow>
