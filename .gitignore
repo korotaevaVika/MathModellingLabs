@@ -3,7 +3,6 @@
 
 .vs/*
 .vs/
-*.resx
 
 #DormAppWeb
 MathModelling/bin
